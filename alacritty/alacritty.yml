@@ -1,0 +1,76 @@
+window:
+  dimensions:
+    columns: 220
+    lines: 60
+  decorations: none
+  padding:
+    x: 15
+    y: 13
+  opacity: 1
+
+shell:
+  program: /opt/homebrew/bin/fish
+
+working_directory: repos
+
+env:
+  TERM: alacritty
+
+font:
+  normal:
+    family: JetBrainsMono Nerd Font Mono
+    style: Regular
+  bold:
+    family: JetBrainsMono Nerd Font Mono
+    style: Bold
+  italic:
+    family: JetBrainsMono Nerd Font Mono
+    style: Italic
+  bold_italic:
+    family: JetBrainsMono Nerd Font Mono
+    style: Bold Italic
+  size: 16
+
+colors:
+  primary:
+    background: "0x0F0F0F"
+    dim_foreground: "0x5A6A79"
+    foreground: "0xB9D9EB"
+    bright_foreground: "0xB9D9EB"
+
+  cursor:
+    text: "0xEFEFEF"
+    cursor: "0x6F6F6F"
+
+  normal:
+    black: "0x1D1D1D"
+    red: "0xFF616E"
+    green: "0x92DF7E"
+    yellow: "0xE2E274"
+    blue: "0xA09EFF"
+    magenta: "0xE581E8"
+    cyan: "0x89E7D1"
+    white: "0xB9D9EB"
+
+  bright:
+    black: "0x1D1D1D"
+    red: "0xFF616E"
+    green: "0x92DF7E"
+    yellow: "0xE2E274"
+    blue: "0xA09EFF"
+    magenta: "0xE581E8"
+    cyan: "0x89E7D1"
+    white: "0xB9D9EB"
+
+  dim:
+    black: "0x252525"
+    red: "0xFF616E"
+    green: "0x496D48"
+    yellow: "0x6F7144"
+    blue: "0x4C5382"
+    magenta: "0x794382"
+    cyan: "0x4C7B70"
+    white: "0x5A6A79"
+
+  indexed_colors:
+    - { index: 16, color: "0x000000" }
