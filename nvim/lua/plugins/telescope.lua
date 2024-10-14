@@ -7,16 +7,12 @@ return {
 		"nvim-lua/plenary.nvim",
 		"nvim-tree/nvim-web-devicons",
 		"nvim-telescope/telescope-ui-select.nvim",
+		"nvim-telescope/telescope-dap.nvim",
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 	},
+    -- stylua: ignore
 	keys = {
-		{
-			"<leader>fb",
-			function()
-				require("telescope.builtin").buffers()
-			end,
-			desc = "List buffers",
-		},
+		{ "<leader>fb", require("telescope.builtin").buffers, desc = "List buffers" },
 		{
 			"<leader>fm",
 			function()
@@ -28,7 +24,7 @@ return {
 						prompt_title = "Modified Buffers",
 						finder = require("telescope.finders").new_table({
 							results = vim.tbl_filter(function(buf)
-								return vim.api.nvim_buf_get_option(buf, "modified")
+								return vim.bo[buf].modified
 							end, vim.api.nvim_list_bufs()),
 							entry_maker = function(buf)
 								local filename = vim.api.nvim_buf_get_name(buf)
@@ -41,7 +37,7 @@ return {
 							end,
 						}),
 						sorter = require("telescope.sorters").get_generic_fuzzy_sorter(),
-						attach_mappings = function(prompt_bufnr, map)
+						attach_mappings = function(prompt_bufnr, _)
 							actions.select_default:replace(function()
 								local selection = action_state.get_selected_entry()
 								actions.close(prompt_bufnr)
@@ -54,63 +50,18 @@ return {
 			end,
 			desc = "List modified buffers",
 		},
-		{
-			"<leader>ff",
-			function()
-				require("telescope.builtin").find_files()
-			end,
-			desc = "Find file",
-		},
-		{
-			"<leader>fr",
-			function()
-				require("telescope.builtin").oldfiles()
-			end,
-			desc = "List recent files",
-		},
-		{
-			"<leader>fs",
-			function()
-				require("telescope.builtin").live_grep()
-			end,
-			desc = "Find string",
-		},
-		{
-			"<leader>fd",
-			function()
-				require("telescope.builtin").diagnostics({
-					severity_limit = vim.diagnostic.severity.WARN, -- This will show only ERROR and WARN
-				})
-			end,
-			desc = "List diagnostics",
-		},
-		{
-			"<leader>fc",
-			function()
-				require("telescope.builtin").grep_string()
-			end,
-			desc = "Find string under cursor",
-		},
-		{
-			"<leader>gm",
-			require("telescope.builtin").git_status,
-			desc = "Open modified file",
-		},
-		{
-			"<leader>gb",
-			require("telescope.builtin").git_branches,
-			desc = "Checkout branch",
-		},
-		{
-			"<leader>gc",
-			require("telescope.builtin").git_commits,
-			desc = "Checkout commit",
-		},
-		{
-			"<leader>gC",
-			require("telescope.builtin").git_bcommits,
-			desc = "Checkout commit(for current file)",
-		},
+		{ "<leader>ff", require("telescope.builtin").find_files, desc = "Find file" },
+		{ "<leader>fr", require("telescope.builtin").oldfiles, desc = "List recent files" },
+		{ "<leader>fs", require("telescope.builtin").live_grep, desc = "Find string" },
+        { "<leader>fd", require("telescope.builtin").diagnostics, desc = "List diagnostics" },
+		{ "<leader>fc", require("telescope.builtin").grep_string, desc = "Find string under cursor" },
+		{ "<leader>gs", require("telescope.builtin").git_status, desc = "Git status" },
+        { "<leader>gb", require("telescope.builtin").git_branches, desc = "Checkout branch" },
+		{ "<leader>gc", require("telescope.builtin").git_commits, desc = "Checkout commit" },
+		{ "<leader>gC", require("telescope.builtin").git_bcommits, desc = "Checkout commit(for current file)" },
+        { "<leader>fdb", function() require("telescope").extensions.dap.list_breakpoints({}) end, desc = "List breakpoints" },
+        { "<leader>fdv", function() require("telescope").extensions.dap.variables({}) end, desc = "List variables" },
+        { "<leader>fdf", function() require("telescope").extensions.dap.frames({}) end, desc = "List frames" },
 	},
 	config = function()
 		local telescope = require("telescope")
@@ -151,5 +102,6 @@ return {
 
 		telescope.load_extension("fzf")
 		telescope.load_extension("ui-select")
+        telescope.load_extension("dap")
 	end,
 }

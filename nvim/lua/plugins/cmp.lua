@@ -6,14 +6,6 @@ return {
 		"hrsh7th/cmp-path",
 		"f3fora/cmp-spell",
 		"zbirenbaum/copilot-cmp",
-		{
-			"MattiasMTS/cmp-dbee",
-			dependencies = {
-				{ "kndndrj/nvim-dbee" },
-			},
-			ft = "sql", -- optional but good to have
-			opts = {}, -- needed
-		},
 	},
 	config = function()
 		local cmp = require("cmp")

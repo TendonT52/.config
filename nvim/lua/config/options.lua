@@ -1,16 +1,22 @@
+-- for session to work correctly
+vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+
 -- tab & indentation
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.autoindent = true
 
--- correct spelling
--- vim.opt.spelllang = "en_us"
--- vim.opt.spell = true
--- vim.opt.spelloptions = "camel"
+-- auto save and auto read
+vim.opt.autowrite = true
+vim.opt.autowriteall = true
+vim.opt.autoread = true
 
 -- disable line wrap
 vim.opt.wrap = false
+
+-- Set spelling file
+vim.opt.spellfile =  vim.fn.stdpath("config") .. "/spell/en.utf-8.add"
 
 -- Set proper render color
 vim.opt.termguicolors = true

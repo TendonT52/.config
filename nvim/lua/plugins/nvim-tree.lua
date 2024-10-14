@@ -1,5 +1,5 @@
-local HEIGHT_RATIO = 0.8 -- You can change this
-local WIDTH_RATIO = 0.5 -- You can change this too
+local HEIGHT_RATIO = 0.8
+local WIDTH_RATIO = 0.5
 
 return {
 	"nvim-tree/nvim-tree.lua",
@@ -11,16 +11,11 @@ return {
 		vim.g.loaded_netrwPlugin = 1
 
 		local function open_nvim_tree(data)
-			-- buffer is a directory
 			local directory = vim.fn.isdirectory(data.file) == 1
 			if not directory then
 				return
 			end
-
-			-- change to the directory
 			vim.cmd.cd(data.file)
-
-			-- open the tree
 			require("nvim-tree.api").tree.open()
 		end
 
@@ -42,8 +37,6 @@ return {
 						local center_x = (screen_w - window_w) / 2
 						local center_y = ((vim.opt.lines:get() - window_h) / 2) - vim.opt.cmdheight:get()
 						return {
-							-- border = "none",
-							-- style = "minimal",
 							relative = "editor",
 							row = center_y,
 							col = center_x,
@@ -56,19 +49,42 @@ return {
 					return math.floor(vim.opt.columns:get() * WIDTH_RATIO)
 				end,
 			},
-			-- change folder arrow icons
 			renderer = {
 				indent_markers = {
 					enable = true,
 				},
-				highlight_git = "all",
+				highlight_git = "icon",
 				icons = {
-					git_placement = "signcolumn",
+					git_placement = "after",
+					diagnostics_placement = "after",
+					glyphs = {
+						default = "",
+						symlink = "",
+						bookmark = "󰆤",
+						modified = "●",
+						hidden = "󰜌",
+						folder = {
+							arrow_closed = "",
+							arrow_open = "",
+							default = "",
+							open = "",
+							empty = "",
+							empty_open = "",
+							symlink = "",
+							symlink_open = "",
+						},
+						git = {
+							unstaged = "(unstage)",
+							staged = "(stage)",
+							unmerged = "(unmerged)",
+							renamed = "(rename)",
+							untracked = "(untrack)",
+							deleted = "(delete)",
+							ignored = "(ignored)",
+						},
+					},
 				},
 			},
-			-- disable window_picker for
-			-- explorer to work well with
-			-- window splits
 			actions = {
 				open_file = {
 					window_picker = {
@@ -80,20 +96,9 @@ return {
 				ignore = false,
 			},
 		})
-
-		-- set keymaps
-		vim.keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer" }) -- toggle file explorer
-		vim.keymap.set(
-			"n",
-			"<leader>ec",
-			"<cmd>NvimTreeFindFileToggle<CR>",
-			{ desc = "Toggle file explorer on current file" }
-		)
-		vim.keymap.set(
-			"n",
-			"<leader>eC",
-			"<cmd>NvimTreeFindFileToggle!<CR>",
-			{ desc = "Toggle file explorer on current file and update root" }
-		)
 	end,
+	keys = {
+		{ "<leader>ee", "<cmd>NvimTreeToggle<CR>",  desc = "Toggle file explorer"  },
+		{ "<leader>ec", "<cmd>NvimTreeFindFileToggle<CR>",  desc = "Toggle file explorer on current file"  },
+	},
 }

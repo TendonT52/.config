@@ -7,16 +7,11 @@ return {
 		theme.setup({
 			flavour = "mocha",
 			transparent_background = false,
-			dim_inactive = {
-				enabled = true,
-				shade = "dark",
-				percentage = 0.25,
-			},
 			styles = {
 				comments = { "italic" },
 				conditionals = { "italic" },
 				loops = { "italic" },
-				functions = { "italic" },
+				functions = {},
 				keywords = { "italic" },
 				strings = {},
 				variables = {},
@@ -38,6 +33,7 @@ return {
 				},
 			},
 		})
+
 		vim.cmd.colorscheme("catppuccin")
 	end,
 }

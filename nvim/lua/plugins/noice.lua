@@ -6,16 +6,15 @@ return {
 		{
 			"rcarriga/nvim-notify",
 			opts = {
-				render = "compact", -- default, compact, minimal, simple
+				render = "compact",
 				stages = "fade",
 				timeout = 1000,
-				max_width = 50,
-				max_height = 10,
+				max_width = 80,
+				max_height = 20,
 			},
 		},
 	},
 	opts = {
-		-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
 		lsp = {
 			signature = {
 				enabled = false,
@@ -26,7 +25,6 @@ return {
 			["vim.lsp.util.stylize_markdown"] = true,
 			["cmp.entry.get_documentation"] = true,
 		},
-		-- you can enable a preset for easier configuration
 		presets = {
 			bottom_search = true, -- use a classic bottom cmdline for search
 			command_palette = false, -- position the cmdline and popupmenu together

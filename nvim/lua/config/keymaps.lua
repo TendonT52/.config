@@ -2,8 +2,15 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-vim.keymap.set("n", "<leader>i", "<cmd>bn<CR>", { desc = "Next buffer" })
-vim.keymap.set("n", "<leader>o", "<cmd>bp<CR>", { desc = "Previous buffer" })
+-- better up/down when lines are wrapped
+vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+vim.keymap.set("x", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set("x", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+
+-- Better indenting
+vim.api.nvim_set_keymap("v", ">", ">gv", { noremap = true })
+vim.api.nvim_set_keymap("v", "<", "<gv", { noremap = true })
 
 vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Scroll down half screen" })
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll up half screen" })
@@ -11,9 +18,6 @@ vim.keymap.set("n", "n", "nzzzv", { desc = "Next word" })
 vim.keymap.set("n", "N", "Nzzzv", { desc = "Previous word" })
 
 vim.keymap.set("x", "<leader>p", '"_dP', { desc = "Paste without replace register" })
-
-vim.api.nvim_set_keymap("v", ">", ">gv", { noremap = true })
-vim.api.nvim_set_keymap("v", "<", "<gv", { noremap = true })
 
 vim.keymap.set("v", "<leader>fj", ":!jq .<CR>", { desc = "Format JSON in visual mode" })
 vim.keymap.set("x", "<leader>fj", ":!jq .<CR>", { desc = "Format JSON in visual line mode" })
