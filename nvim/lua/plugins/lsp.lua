@@ -10,6 +10,7 @@ return {
 			end
 
 			local lspconfig = require("lspconfig")
+		    local util = require("lspconfig.util")
 
 			lspconfig.lua_ls.setup({
 				on_init = function(client)
@@ -46,6 +47,32 @@ return {
 				settings = {
 					Lua = {},
 				},
+			})
+
+			-- Function to get the path of the pipenv virtual environment
+			local function get_pipenv_python()
+				local venv = vim.fn.system("pipenv --venv")
+				return venv:gsub("\n", "") .. "/bin/python"
+			end
+			-- Configure each LSP server
+			lspconfig.robotframework_ls.setup({
+				root_dir = function(fname)
+					return util.root_pattern("robotidy.toml", "pyproject.toml", "conda.yaml", "robot.yaml", "Pipfile")(
+						fname
+					) or util.find_git_ancestor(fname)
+				end,
+				cmd = { get_pipenv_python(), "-m", "robotframework_ls" },
+				filetypes = { "robot" },
+				settings = {
+					robot = {
+						python = {
+							pythonPath = vim.fn.getcwd(),
+						},
+					},
+				},
+			})
+			lspconfig.pyright.setup({
+				cmd = { "pipenv", "run", "pyright-langserver", "--stdio" },
 			})
 
 			lspconfig.gopls.setup({
