@@ -4,3 +4,4 @@
 wezterm/workspace/**
 !nvim/
 !nvim/**
+wezterm/spell/**
