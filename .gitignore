@@ -1,1 +1,6 @@
- wezterm/workspace/
+*
+!wezterm/
+!wezterm/**
+wezterm/workspace/**
+!nvim/
+!nvim/**

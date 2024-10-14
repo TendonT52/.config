@@ -201,7 +201,7 @@ function M.rename_workspace()
 			{ Attribute = { Intensity = "Bold" } },
 			{ Text = "Rename workspace to " },
 		}),
-		action = wezterm.action_callback(function(window, pane, line)
+		action = wezterm.action_callback(function(window, _, line)
 			if line then
 				local old_title = window:mux_window():get_workspace()
 				mux.rename_workspace(window:mux_window():get_workspace(), line)
@@ -212,8 +212,8 @@ function M.rename_workspace()
 	})
 end
 
-function M.kill_wokspace()
-	return wezterm.action_callback(function(window, pane, line)
+function M.kill_workspace()
+	return wezterm.action_callback(function(window, _, _)
 		local workspace = window:active_workspace()
 		local success, stdout =
 			wezterm.run_child_process({ "/opt/homebrew/bin/wezterm", "cli", "list", "--format=json" })
@@ -244,6 +244,34 @@ function M.kill_wokspace()
 
 		local workspace_path = wezterm.home_dir .. "/.config/wezterm/workspace/wezterm_state_" .. workspace .. ".json"
 		os.remove(workspace_path)
+	end)
+end
+
+function M.switch_workspace(window, pane, workspace)
+	local current_workspace = window:active_workspace()
+	if current_workspace == workspace then
+		return
+	end
+
+	window:perform_action(
+		act.SwitchToWorkspace({
+			name = workspace,
+		}),
+		pane
+	)
+	wezterm.GLOBAL.previous_workspace = current_workspace
+end
+
+function M.switch_to_previous_workspace()
+	return wezterm.action_callback(function(window, pane)
+		local current_workspace = window:active_workspace()
+		local workspace = wezterm.GLOBAL.previous_workspace
+
+		if current_workspace == workspace or wezterm.GLOBAL.previous_workspace == nil then
+			return
+		end
+
+		M.switch_workspace(window, pane, workspace)
 	end)
 end
 

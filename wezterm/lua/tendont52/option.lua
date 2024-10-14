@@ -6,7 +6,7 @@ function M.init(config)
 	config.window_decorations = "RESIZE"
 	config.status_update_interval = 1000
 	config.font_size = 16.0
-	config.line_height = 1.2
+	config.line_height = 1.3
 	config.tab_max_width = 32
 	config.switch_to_last_active_tab_when_closing_tab = true
 	config.font = wezterm.font("JetBrainsMono Nerd Font")
