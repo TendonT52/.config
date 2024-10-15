@@ -1,3 +1,16 @@
+function vim.getVisualSelection()
+	vim.cmd('noau normal! "vy"')
+	local text = vim.fn.getreg("v")
+	vim.fn.setreg("v", {})
+
+	text = string.gsub(text, "\n", "")
+	if #text > 0 then
+		return text
+	else
+		return ""
+	end
+end
+
 return {
 	"nvim-telescope/telescope.nvim",
 	cmd = "Telescope",
@@ -12,7 +25,8 @@ return {
 	},
     -- stylua: ignore
 	keys = {
-		{ "<leader>fb", require("telescope.builtin").buffers, desc = "List buffers" },
+        { "<leader>f", "", desc = "Find" },
+		{ "<leader>fb", require("telescope.builtin").buffers, desc = "Buffers" },
 		{
 			"<leader>fm",
 			function()
@@ -48,20 +62,25 @@ return {
 					})
 					:find()
 			end,
-			desc = "List modified buffers",
+			desc = "Modified buffers",
 		},
-		{ "<leader>ff", require("telescope.builtin").find_files, desc = "Find file" },
-		{ "<leader>fr", require("telescope.builtin").oldfiles, desc = "List recent files" },
-		{ "<leader>fs", require("telescope.builtin").live_grep, desc = "Find string" },
-        { "<leader>fd", require("telescope.builtin").diagnostics, desc = "List diagnostics" },
-		{ "<leader>fc", require("telescope.builtin").grep_string, desc = "Find string under cursor" },
+		{ "<leader>ff", require("telescope.builtin").find_files, desc = "File" },
+		{ "<leader>fr", require("telescope.builtin").oldfiles, desc = "Recent files" },
+		{ "<leader>fs", require("telescope.builtin").live_grep, desc = "word"},
+		{ "<leader>fs",
+            function()
+                local text = vim.getVisualSelection()
+                require("telescope.builtin").live_grep({ default_text = text })
+            end,
+            desc = "word", mode="x"
+        },
+        { "<leader>fd", require("telescope.builtin").diagnostics, desc = "Diagnostics" },
+        { "<leader>fB", function() require("telescope").extensions.dap.list_breakpoints({}) end, desc = "Breakpoints" },
+
 		{ "<leader>gs", require("telescope.builtin").git_status, desc = "Git status" },
         { "<leader>gb", require("telescope.builtin").git_branches, desc = "Checkout branch" },
 		{ "<leader>gc", require("telescope.builtin").git_commits, desc = "Checkout commit" },
 		{ "<leader>gC", require("telescope.builtin").git_bcommits, desc = "Checkout commit(for current file)" },
-        { "<leader>fdb", function() require("telescope").extensions.dap.list_breakpoints({}) end, desc = "List breakpoints" },
-        { "<leader>fdv", function() require("telescope").extensions.dap.variables({}) end, desc = "List variables" },
-        { "<leader>fdf", function() require("telescope").extensions.dap.frames({}) end, desc = "List frames" },
 	},
 	config = function()
 		local telescope = require("telescope")
@@ -93,15 +112,13 @@ return {
 					case_mode = "smart_case",
 				},
 				["ui-select"] = {
-					require("telescope.themes").get_dropdown({
-						-- even more opts
-					}),
+					require("telescope.themes").get_dropdown({}),
 				},
 			},
 		})
 
 		telescope.load_extension("fzf")
 		telescope.load_extension("ui-select")
-        telescope.load_extension("dap")
+		telescope.load_extension("dap")
 	end,
 }

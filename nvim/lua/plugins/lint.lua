@@ -49,7 +49,7 @@ return {
 					vim.diagnostic.enable(true)
 				end
 			end,
-			desc = "Toggle lint",
+			desc = "Lint",
 		},
 	},
 }

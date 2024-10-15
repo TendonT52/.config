@@ -145,15 +145,6 @@ return {
 							["[P"] = { query = "@parameter.inner", desc = "Prev parameter end" },
 						},
 					},
-					lsp_interop = {
-						enable = true,
-						border = "rounded",
-						floating_preview_opts = {},
-						peek_definition_code = {
-							["<leader>lo"] = { query = "@class.outer", desc = "Peek class", silent = true },
-							["<leader>lp"] = { query = "@function.outer", desc = "Peek function", silent = true },
-						},
-					},
 				},
 			})
 		end,
@@ -165,11 +156,46 @@ return {
 			return {
                 -- stylua: ignore
 				{ ";", function() return ts_repeat_move.repeat_last_move() end, desc = "Repeat last move", mode = { "n", "x", "o" } },
-				{ ",", function() return ts_repeat_move.repeat_last_move_opposite() end, desc = "Repeat opposite of last move", mode = { "n", "x", "o" } },
-				{ "f", function() return ts_repeat_move.builtin_f_expr() end, mode = { "n", "x", "o" }, expr = true },
-				{ "F", function() return ts_repeat_move.builtin_F_expr() end, mode = { "n", "x", "o" }, expr = true },
-				{ "t", function() return ts_repeat_move.builtin_t_expr() end, mode = { "n", "x", "o" }, expr = true },
-				{ "T", function() return ts_repeat_move.builtin_T_expr() end, mode = { "n", "x", "o" }, expr = true },
+				{
+					",",
+					function()
+						return ts_repeat_move.repeat_last_move_opposite()
+					end,
+					desc = "Repeat opposite of last move",
+					mode = { "n", "x", "o" },
+				},
+				{
+					"f",
+					function()
+						return ts_repeat_move.builtin_f_expr()
+					end,
+					mode = { "n", "x", "o" },
+					expr = true,
+				},
+				{
+					"F",
+					function()
+						return ts_repeat_move.builtin_F_expr()
+					end,
+					mode = { "n", "x", "o" },
+					expr = true,
+				},
+				{
+					"t",
+					function()
+						return ts_repeat_move.builtin_t_expr()
+					end,
+					mode = { "n", "x", "o" },
+					expr = true,
+				},
+				{
+					"T",
+					function()
+						return ts_repeat_move.builtin_T_expr()
+					end,
+					mode = { "n", "x", "o" },
+					expr = true,
+				},
 			}
 		end,
 	},

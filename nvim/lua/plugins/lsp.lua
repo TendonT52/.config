@@ -101,13 +101,15 @@ return {
 				{ "gi", function() require("telescope.builtin").lsp_implementations() end, desc = "Go to implementation" },
 				{ "gr", function() require("telescope.builtin").lsp_references() end, desc = "Go to references" },
 				{ "gt", function() require("telescope.builtin").lsp_type_definitions() end, desc = "Go to type definition" },
+
 				{ "K", vim.lsp.buf.hover, desc = "Get information" },
-				{ "<leader>rn", vim.lsp.buf.rename, desc = "Rename symbol" },
 				{ "<leader>D", function() require("telescope.builtin").diagnostics({ bufnr = 0 }) end, desc = "List diagnostics" },
 				{ "[d", vim.diagnostic.goto_prev, desc = "Previous diagnostic" },
 				{ "]d", vim.diagnostic.goto_next, desc = "Next diagnostic" },
-				{ "<leader>rs", "<cmd>LspRestart<CR>", desc = "Restart LSP" },
-				{ "<leader>ca", vim.lsp.buf.code_action, desc = "Code action" },
+
+                { "<leader>c", "", desc = "Code" },
+				{ "<leader>ca", vim.lsp.buf.code_action, desc = "Action" },
+				{ "<leader>cr", vim.lsp.buf.rename, desc = "Rename" },
 			}
 		end,
 	},

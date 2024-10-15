@@ -44,12 +44,10 @@ return {
 		end,
         -- stylua: ignore
         keys = {
-            { "<leader>d", "", desc = "+debug", mode = { "n", "v" } },
-            { "<leader>dB", function() require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: ")) end, desc = "Breakpoint Condition" },
-            { "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint" },
+            { "<leader>d", "", desc = "Debug" },
             { "<leader>dc", function() require("dap").continue() end, desc = "Continue" },
             { "<leader>da", function() require("dap").continue({ before = get_args }) end, desc = "Run with Args" },
-            { "<leader>dC", function() require("dap").run_to_cursor() end, desc = "Run to Cursor" },
+            { "<leader>dL", function() require("dap").run_to_cursor() end, desc = "Run to Cursor" },
             { "<leader>dg", function() require("dap").goto_() end, desc = "Go to Line (No Execute)" },
             { "<leader>di", function() require("dap").step_into() end, desc = "Step Into" },
             { "<leader>dj", function() require("dap").down() end, desc = "Down" },
@@ -61,7 +59,6 @@ return {
             { "<leader>dr", function() require("dap").repl.toggle() end, desc = "Toggle REPL" },
             { "<leader>ds", function() require("dap").session() end, desc = "Session" },
             { "<leader>dx", function() require("dap").terminate() end, desc = "Terminate" },
-            { "<leader>dw", function() require("dap.ui.widgets").hover() end, desc = "Widgets" },
         },
 	},
 	{
@@ -99,10 +96,25 @@ return {
 				},
 			})
 		end,
-        keys = {
-            { "<leader>v", function() require("dapui").float_element("scopes", {enter=true}) end, desc = "debug variables" },
-            { "<leader>s", function() require("dapui").float_element("stacks", {enter=true}) end, desc = "debug stacks" },
-            { "<leader>w", function() require("dapui").float_element("watches", {enter=true}) end, desc = "debug watches" },
-        }
+        -- stylua: ignore
+		keys = {
+			{ "<leader>v", function() require("dapui").float_element("scopes", { enter = true }) end, desc = "Debug variables", },
+			{ "<leader>s", function() require("dapui").float_element("stacks", { enter = true }) end, desc = "Debug stacks", },
+			{ "<leader>w", function() require("dapui").float_element("watches", { enter = true }) end, desc = "Debug watches", },
+		},
+	},
+	{
+		"Weissle/persistent-breakpoints.nvim",
+		config = function()
+			require("persistent-breakpoints").setup({
+				load_breakpoints_event = { "BufReadPost" },
+			})
+		end,
+		keys = {
+            { "<leader>db", function() require("persistent-breakpoints.api").toggle_breakpoint() end, desc = "Set breakpoint" },
+            { "<leader>dB", function() require("persistent-breakpoints.api").toggle_breakpoint() end, desc = "Clear breakpoints" },
+            { "<leader>dp", function() require("persistent-breakpoints.api").set_log_point() end, desc = "Print point" },
+            { "<leader>dC", function() require("persistent-breakpoints.api").set_conditional_breakpoint() end, desc = "Breakpoint Condition" },
+		},
 	},
 }

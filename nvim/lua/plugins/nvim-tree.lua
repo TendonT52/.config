@@ -98,7 +98,7 @@ return {
 		})
 	end,
 	keys = {
-		{ "<leader>ee", "<cmd>NvimTreeToggle<CR>",  desc = "Toggle file explorer"  },
-		{ "<leader>ec", "<cmd>NvimTreeFindFileToggle<CR>",  desc = "Toggle file explorer on current file"  },
+		{ "<leader>e", "<cmd>NvimTreeToggle<CR>",  desc = "File explorer"  },
+		{ "<leader>E", "<cmd>NvimTreeFindFileToggle<CR>",  desc = "Toggle file explorer on current file"  },
 	},
 }
