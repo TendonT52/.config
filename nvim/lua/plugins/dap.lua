@@ -5,7 +5,28 @@ return {
 			{
 				"theHamsta/nvim-dap-virtual-text",
 				config = function()
-					require("nvim-dap-virtual-text").setup()
+					require("nvim-dap-virtual-text").setup({
+						display_callback = function(variable, buf, stackframe, node, options)
+							local function truncate(str, max_length)
+								if #str > max_length then
+									return str:sub(1, max_length) .. "..."
+								end
+								return str
+							end
+
+							-- Clean up the value by replacing multiple whitespace characters with a single space
+							local cleaned_value = variable.value:gsub("%s+", " ")
+
+							-- Truncate the cleaned value to 20 characters
+							local truncated_value = truncate(cleaned_value, 20)
+
+							if options.virt_text_pos == "inline" then
+								return " = " .. truncated_value
+							else
+								return variable.name .. " = " .. truncated_value
+							end
+						end,
+					})
 				end,
 			},
 		},
@@ -82,6 +103,7 @@ return {
 	{
 		"rcarriga/nvim-dap-ui",
 		dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
+		lazy = false,
 		config = function()
 			require("dapui").setup({
 				floating = {
@@ -106,15 +128,37 @@ return {
 	{
 		"Weissle/persistent-breakpoints.nvim",
 		config = function()
-			require("persistent-breakpoints").setup({
-				load_breakpoints_event = { "BufReadPost" },
-			})
+			require("persistent-breakpoints").setup({ load_breakpoints_event = { "BufReadPost" } })
 		end,
 		keys = {
-            { "<leader>db", function() require("persistent-breakpoints.api").toggle_breakpoint() end, desc = "Set breakpoint" },
-            { "<leader>dB", function() require("persistent-breakpoints.api").toggle_breakpoint() end, desc = "Clear breakpoints" },
-            { "<leader>dp", function() require("persistent-breakpoints.api").set_log_point() end, desc = "Print point" },
-            { "<leader>dC", function() require("persistent-breakpoints.api").set_conditional_breakpoint() end, desc = "Breakpoint Condition" },
+			{
+				"<leader>db",
+				function()
+					require("persistent-breakpoints.api").toggle_breakpoint()
+				end,
+				desc = "Set breakpoint",
+			},
+			{
+				"<leader>dB",
+				function()
+					require("persistent-breakpoints.api").toggle_breakpoint()
+				end,
+				desc = "Clear breakpoints",
+			},
+			{
+				"<leader>dp",
+				function()
+					require("persistent-breakpoints.api").set_log_point()
+				end,
+				desc = "Print point",
+			},
+			{
+				"<leader>dC",
+				function()
+					require("persistent-breakpoints.api").set_conditional_breakpoint()
+				end,
+				desc = "Breakpoint Condition",
+			},
 		},
 	},
 }

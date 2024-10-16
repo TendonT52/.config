@@ -2,6 +2,7 @@ return {
 	"hrsh7th/nvim-cmp",
 	event = "InsertEnter",
 	dependencies = {
+		"hrsh7th/cmp-nvim-lsp",
 		"hrsh7th/cmp-buffer",
 		"hrsh7th/cmp-path",
 		"f3fora/cmp-spell",
@@ -9,7 +10,6 @@ return {
 	},
 	config = function()
 		local cmp = require("cmp")
-
 		cmp.setup({
 			completion = {
 				completeopt = "menu,menuone,preview",
@@ -24,12 +24,11 @@ return {
 			}),
 
 			sources = cmp.config.sources({
-				{ name = "copilot", group_index = 2 },
-				{ name = "cmp-dbee" },
-				{ name = "nvim_lsp" },
-				{ name = "buffer" },
-				{ name = "spell", option = { keep_all_entries = false } },
-				{ name = "path" },
+				{ name = "copilot", group_index = 2, max_item_count = 3 },
+				{ name = "nvim_lsp", max_item_count = 5 },
+				{ name = "buffer", max_item_count = 3 },
+				{ name = "spell", option = { keep_all_entries = false }, max_item_count = 3  },
+				{ name = "path" , max_item_count = 3 },
 			}),
 
 			sorting = {

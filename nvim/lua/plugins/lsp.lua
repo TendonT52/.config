@@ -1,6 +1,7 @@
 return {
 	{
 		"neovim/nvim-lspconfig",
+		dependencies = "hrsh7th/nvim-cmp",
 		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			local signs = { Error = "", Warn = "", Hint = "", Info = "" }
@@ -10,9 +11,11 @@ return {
 			end
 
 			local lspconfig = require("lspconfig")
-		    local util = require("lspconfig.util")
+			local util = require("lspconfig.util")
+			local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 			lspconfig.lua_ls.setup({
+				capabilities = lsp_capabilities,
 				on_init = function(client)
 					if client.workspace_folders then
 						local path = client.workspace_folders[1].name
@@ -56,6 +59,7 @@ return {
 			end
 			-- Configure each LSP server
 			lspconfig.robotframework_ls.setup({
+				capabilities = lsp_capabilities,
 				root_dir = function(fname)
 					return util.root_pattern("robotidy.toml", "pyproject.toml", "conda.yaml", "robot.yaml", "Pipfile")(
 						fname
@@ -72,10 +76,12 @@ return {
 				},
 			})
 			lspconfig.pyright.setup({
+				capabilities = lsp_capabilities,
 				cmd = { "pipenv", "run", "pyright-langserver", "--stdio" },
 			})
 
 			lspconfig.gopls.setup({
+				capabilities = lsp_capabilities,
 				settings = {
 					gopls = {
 						analyses = {
