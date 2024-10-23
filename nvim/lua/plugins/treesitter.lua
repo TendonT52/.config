@@ -3,6 +3,12 @@ return {
 		"nvim-treesitter/nvim-treesitter-textobjects",
 	},
 	{
+		"windwp/nvim-ts-autotag",
+        config = function()
+            require('nvim-ts-autotag').setup()
+        end,
+	},
+	{
 		"nvim-treesitter/nvim-treesitter",
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter-textobjects",
@@ -30,9 +36,6 @@ return {
 					end,
 				},
 				indent = { enable = true },
-				autotag = {
-					enable = true,
-				},
 
 				ensure_installed = {
 					"bash",

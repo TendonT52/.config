@@ -75,6 +75,7 @@ return {
 					},
 				},
 			})
+
 			lspconfig.pyright.setup({
 				capabilities = lsp_capabilities,
 				cmd = { "pipenv", "run", "pyright-langserver", "--stdio" },
@@ -98,6 +99,21 @@ return {
 						usePlaceholders = true,
 					},
 				},
+			})
+
+			lspconfig.html.setup({
+				capabilities = lsp_capabilities,
+			})
+
+			lspconfig.cssls.setup({
+				capabilities = lsp_capabilities,
+			})
+			lspconfig.cssmodules_ls.setup({
+				capabilities = lsp_capabilities,
+			})
+
+			lspconfig.denols.setup({
+				capabilities = lsp_capabilities,
 			})
 		end,
 		keys = function()

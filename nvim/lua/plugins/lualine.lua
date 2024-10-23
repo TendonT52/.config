@@ -18,25 +18,57 @@ return {
 			end
 		end
 
+		local macro_recording = function()
+			local recording_register = vim.fn.reg_recording()
+			if recording_register == "" then
+				return ""
+			else
+				return "Recording @" .. recording_register
+			end
+		end
+
 		-- configure lualine with modified theme
 		lualine.setup({
+			extensions = { "quickfix", "nvim-dap-ui" },
 			options = {
 				theme = "catppuccin",
 				component_separators = "",
 				section_separators = { left = "", right = "" },
 			},
 			sections = {
-				lualine_a = { "mode" },
+				lualine_a = {
+					"mode",
+				},
 				lualine_b = { "branch" },
 				lualine_c = {
 					{ "filename", file_status = true, path = 1 },
-					{
-						noice.api.status.mode.get,
-						cond = noice.api.status.mode.has,
-						color = { fg = "#ff9e64" },
-					},
 				},
 				lualine_x = {
+					{
+						macro_recording,
+					},
+					{
+						function()
+							return require("dap").status()
+						end,
+						icon = { " ", color = { fg = "#e7c664" } },
+						cond = function()
+							if not package.loaded.dap then
+								return false
+							end
+							local session = require("dap").session()
+							return session ~= nil
+						end,
+					},
+				},
+				lualine_y = {
+					{ lint_progress },
+					"copilot",
+					{ lazy_status.updates, cond = lazy_status.has_updates },
+					{ "encoding" },
+					{ "filetype" },
+				},
+				lualine_z = {
 					{
 						function()
 							local starts = vim.fn.line("v")
@@ -49,15 +81,8 @@ return {
 							return vim.fn.mode():find("[Vv]") ~= nil
 						end,
 					},
+					"location",
 				},
-				lualine_y = {
-					{ lint_progress, color = { fg = "#ff9e64" } },
-					"copilot",
-					{ lazy_status.updates, cond = lazy_status.has_updates },
-					{ "encoding" },
-					{ "filetype" },
-				},
-				lualine_z = { "location", "progress" },
 			},
 		})
 	end,
