@@ -67,7 +67,8 @@ return {
         keys = {
             { "<leader>d", "", desc = "Debug" },
             { "<leader>dc", function() require("dap").continue() end, desc = "Continue" },
-            { "<leader>da", function() require("dap").continue({ before = get_args }) end, desc = "Run with Args" },
+            { "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint" },
+            { "<leader>dB", function() require("dap").clear_breakpoints() end, desc = "Clear Breakpoint" },
             { "<leader>dL", function() require("dap").run_to_cursor() end, desc = "Run to Cursor" },
             { "<leader>dg", function() require("dap").goto_() end, desc = "Go to Line (No Execute)" },
             { "<leader>di", function() require("dap").step_into() end, desc = "Step Into" },
@@ -126,39 +127,10 @@ return {
 		},
 	},
 	{
-		"Weissle/persistent-breakpoints.nvim",
+		"daic0r/dap-helper.nvim",
+		dependencies = { "rcarriga/nvim-dap-ui", "mfussenegger/nvim-dap" },
 		config = function()
-			require("persistent-breakpoints").setup({ load_breakpoints_event = { "BufReadPost" } })
+			require("dap-helper").setup()
 		end,
-		keys = {
-			{
-				"<leader>db",
-				function()
-					require("persistent-breakpoints.api").toggle_breakpoint()
-				end,
-				desc = "Set breakpoint",
-			},
-			{
-				"<leader>dB",
-				function()
-					require("persistent-breakpoints.api").toggle_breakpoint()
-				end,
-				desc = "Clear breakpoints",
-			},
-			{
-				"<leader>dp",
-				function()
-					require("persistent-breakpoints.api").set_log_point()
-				end,
-				desc = "Print point",
-			},
-			{
-				"<leader>dC",
-				function()
-					require("persistent-breakpoints.api").set_conditional_breakpoint()
-				end,
-				desc = "Breakpoint Condition",
-			},
-		},
 	},
 }
