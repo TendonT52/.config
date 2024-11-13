@@ -16,19 +16,19 @@ return {
 			},
 
 			mapping = cmp.mapping.preset.insert({
-				["<S-Up>"] = cmp.mapping.scroll_docs(-4),
-				["<S-Down>"] = cmp.mapping.scroll_docs(4),
+				["<C-u>"] = cmp.mapping.scroll_docs(-4),
+				["<C-d>"] = cmp.mapping.scroll_docs(4),
 				["<Left>"] = cmp.mapping.abort(),
 				["<Right>"] = cmp.mapping.complete(),
 				["<S-Tab>"] = cmp.mapping.confirm(),
 			}),
 
 			sources = cmp.config.sources({
-				{ name = "copilot", group_index = 2, max_item_count = 3 },
-				{ name = "nvim_lsp", max_item_count = 5 },
-				{ name = "buffer", max_item_count = 3 },
-				{ name = "spell", option = { keep_all_entries = false }, max_item_count = 3  },
-				{ name = "path" , max_item_count = 3 },
+				{ name = "copilot", group_index = 2 },
+				{ name = "nvim_lsp" },
+				{ name = "buffer" },
+				{ name = "spell", option = { keep_all_entries = false } },
+				{ name = "path" },
 			}),
 
 			sorting = {

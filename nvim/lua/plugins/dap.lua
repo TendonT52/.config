@@ -32,6 +32,14 @@ return {
 		},
 
 		config = function()
+            -- make toggle window close with q
+            vim.api.nvim_create_autocmd("FileType", {
+                pattern = "dap-float",
+                callback = function()
+                    vim.api.nvim_buf_set_keymap(0, "n", "q", "<cmd>close!<CR>", { noremap = true, silent = true })
+                end
+            })
+
 			local dap = require("dap")
 			dap.adapters.delve = function(callback, config)
 				if config.mode == "remote" and config.request == "attach" then
@@ -66,11 +74,18 @@ return {
         -- stylua: ignore
         keys = {
             { "<leader>d", "", desc = "Debug" },
-            { "<leader>dc", function() require("dap").continue() end, desc = "Continue" },
+            { "<leader>dc",
+                function()
+                    vim.cmd('wa')
+                    require("dap").continue()
+                end,
+                desc = "Continue debug"
+            },
             { "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint" },
             { "<leader>dB", function() require("dap").clear_breakpoints() end, desc = "Clear Breakpoint" },
             { "<leader>dL", function() require("dap").run_to_cursor() end, desc = "Run to Cursor" },
             { "<leader>dg", function() require("dap").goto_() end, desc = "Go to Line (No Execute)" },
+            { "<leader>v", function() require("dap.ui.widgets").hover() end, desc = "Hover", mode = { "n", "v" } },
             { "<leader>di", function() require("dap").step_into() end, desc = "Step Into" },
             { "<leader>dj", function() require("dap").down() end, desc = "Down" },
             { "<leader>dk", function() require("dap").up() end, desc = "Up" },
@@ -121,7 +136,7 @@ return {
 		end,
         -- stylua: ignore
 		keys = {
-			{ "<leader>v", function() require("dapui").float_element("scopes", { enter = true }) end, desc = "Debug variables", },
+			{ "<leader>V", function() require("dapui").float_element("scopes", { enter = true }) end, desc = "Debug variables", },
 			{ "<leader>s", function() require("dapui").float_element("stacks", { enter = true }) end, desc = "Debug stacks", },
 			{ "<leader>w", function() require("dapui").float_element("watches", { enter = true }) end, desc = "Debug watches", },
 		},

@@ -58,22 +58,26 @@ return {
 				return venv:gsub("\n", "") .. "/bin/python"
 			end
 			-- Configure each LSP server
-			lspconfig.robotframework_ls.setup({
+			-- lspconfig.robotframework_ls.setup({
+			-- 	capabilities = lsp_capabilities,
+			-- 	root_dir = function(fname)
+			-- 		return util.root_pattern("robotidy.toml", "pyproject.toml", "conda.yaml", "robot.yaml", "Pipfile")(
+			-- 			fname
+			-- 		) or util.find_git_ancestor(fname)
+			-- 	end,
+			-- 	cmd = { get_pipenv_python(), "-m", "robotframework_ls" },
+			-- 	filetypes = { "robot" },
+			-- 	settings = {
+			-- 		robot = {
+			-- 			python = {
+			-- 				pythonPath = vim.fn.getcwd(),
+			-- 			},
+			-- 		},
+			-- 	},
+			-- })
+
+			lspconfig.robotcode.setup({
 				capabilities = lsp_capabilities,
-				root_dir = function(fname)
-					return util.root_pattern("robotidy.toml", "pyproject.toml", "conda.yaml", "robot.yaml", "Pipfile")(
-						fname
-					) or util.find_git_ancestor(fname)
-				end,
-				cmd = { get_pipenv_python(), "-m", "robotframework_ls" },
-				filetypes = { "robot" },
-				settings = {
-					robot = {
-						python = {
-							pythonPath = vim.fn.getcwd(),
-						},
-					},
-				},
 			})
 
 			lspconfig.pyright.setup({
@@ -111,10 +115,6 @@ return {
 			lspconfig.cssmodules_ls.setup({
 				capabilities = lsp_capabilities,
 			})
-
-			lspconfig.denols.setup({
-				capabilities = lsp_capabilities,
-			})
 		end,
 		keys = function()
             -- stylua: ignore
@@ -134,5 +134,15 @@ return {
 				{ "<leader>cr", vim.lsp.buf.rename, desc = "Rename" },
 			}
 		end,
+	},
+	{
+		"pmizio/typescript-tools.nvim",
+		dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+		opts = {
+			jsx_close_tag = {
+				enable = true,
+				filetypes = { "javascriptreact", "typescriptreact" },
+			},
+		},
 	},
 }

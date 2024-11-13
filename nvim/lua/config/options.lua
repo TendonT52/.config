@@ -12,11 +12,14 @@ vim.opt.autowrite = true
 vim.opt.autowriteall = true
 vim.opt.autoread = true
 
+-- Shows maximum of 10 items in the completion menu
+vim.opt.pumheight = 10
+
 -- disable line wrap
 vim.opt.wrap = false
 
 -- Set spelling file
-vim.opt.spellfile =  vim.fn.stdpath("config") .. "/spell/en.utf-8.add"
+vim.opt.spellfile = vim.fn.stdpath("config") .. "/spell/en.utf-8.add"
 
 -- Set proper render color
 vim.opt.termguicolors = true
@@ -77,5 +80,14 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
 	callback = function()
 		vim.highlight.on_yank()
+	end,
+})
+
+-- Auto-save when leaving buffer/window
+vim.api.nvim_create_autocmd({ "FocusLost", "BufLeave" }, {
+	callback = function()
+		if vim.bo.modified and not vim.bo.readonly and vim.fn.expand("%") ~= "" then
+			vim.api.nvim_command("silent! wa")
+		end
 	end,
 })
