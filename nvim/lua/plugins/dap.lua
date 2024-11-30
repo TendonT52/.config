@@ -141,11 +141,11 @@ return {
 			{ "<leader>w", function() require("dapui").float_element("watches", { enter = true }) end, desc = "Debug watches", },
 		},
 	},
-	{
-		"daic0r/dap-helper.nvim",
-		dependencies = { "rcarriga/nvim-dap-ui", "mfussenegger/nvim-dap" },
-		config = function()
-			require("dap-helper").setup()
-		end,
-	},
+	-- {
+	-- 	"daic0r/dap-helper.nvim",
+	-- 	dependencies = { "rcarriga/nvim-dap-ui", "mfussenegger/nvim-dap" },
+	-- 	config = function()
+	-- 		require("dap-helper").setup()
+	-- 	end,
+	-- },
 }
