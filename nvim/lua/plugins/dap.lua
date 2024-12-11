@@ -32,13 +32,13 @@ return {
 		},
 
 		config = function()
-            -- make toggle window close with q
-            vim.api.nvim_create_autocmd("FileType", {
-                pattern = "dap-float",
-                callback = function()
-                    vim.api.nvim_buf_set_keymap(0, "n", "q", "<cmd>close!<CR>", { noremap = true, silent = true })
-                end
-            })
+			-- make toggle window close with q
+			vim.api.nvim_create_autocmd("FileType", {
+				pattern = "dap-float",
+				callback = function()
+					vim.api.nvim_buf_set_keymap(0, "n", "q", "<cmd>close!<CR>", { noremap = true, silent = true })
+				end,
+			})
 
 			local dap = require("dap")
 			dap.adapters.delve = function(callback, config)
@@ -61,15 +61,20 @@ return {
 				end
 			end
 
-			-- https://github.com/go-delve/delve/blob/master/Documentation/usage/dlv_dap.md
-			dap.configurations.go = {
-				{
-					type = "delve",
-					name = "Debug",
-					request = "launch",
-					program = "${file}",
-				},
-			}
+			-- dap.configurations.go = {
+			-- 	{
+			-- 		type = "delve",
+			-- 		name = "go run ${file}",
+			-- 		request = "launch",
+			-- 		program = "${file}",
+			-- 	},
+			-- 	{
+			-- 		type = "delve",
+			-- 		name = "go run .",
+			-- 		request = "launch",
+			-- 		program = ".",
+			-- 	},
+			-- }
 		end,
         -- stylua: ignore
         keys = {
@@ -141,11 +146,11 @@ return {
 			{ "<leader>w", function() require("dapui").float_element("watches", { enter = true }) end, desc = "Debug watches", },
 		},
 	},
-	-- {
-	-- 	"daic0r/dap-helper.nvim",
-	-- 	dependencies = { "rcarriga/nvim-dap-ui", "mfussenegger/nvim-dap" },
-	-- 	config = function()
-	-- 		require("dap-helper").setup()
-	-- 	end,
-	-- },
+	{
+		"daic0r/dap-helper.nvim",
+		dependencies = { "rcarriga/nvim-dap-ui", "mfussenegger/nvim-dap" },
+		config = function()
+			require("dap-helper").setup()
+		end,
+	},
 }
