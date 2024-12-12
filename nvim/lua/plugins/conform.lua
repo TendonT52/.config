@@ -69,6 +69,12 @@ return {
 				},
 				stdin = false,
 			},
+			golines = {
+				command = "golines",
+                args = {
+                    "--max-len=120"
+                }
+			},
 		},
 	},
 	keys = {
