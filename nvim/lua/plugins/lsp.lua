@@ -1,7 +1,7 @@
 return {
 	{
 		"neovim/nvim-lspconfig",
-		dependencies = "hrsh7th/nvim-cmp",
+		dependencies = { "hrsh7th/nvim-cmp", "b0o/schemastore.nvim" },
 		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			local signs = { Error = "", Warn = "", Hint = "", Info = "" }
@@ -11,7 +11,6 @@ return {
 			end
 
 			local lspconfig = require("lspconfig")
-			local util = require("lspconfig.util")
 			local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 			lspconfig.lua_ls.setup({
@@ -76,7 +75,6 @@ return {
 						staticcheck = true,
 						gofumpt = true,
 						experimentalPostfixCompletions = true,
-						usePlaceholders = true,
 					},
 				},
 			})
@@ -90,6 +88,23 @@ return {
 			})
 			lspconfig.cssmodules_ls.setup({
 				capabilities = lsp_capabilities,
+			})
+
+			lspconfig.jsonls.setup({
+				capabilities = lsp_capabilities,
+			})
+
+			lspconfig.yamlls.setup({
+				capabilities = lsp_capabilities,
+				settings = {
+					yaml = {
+						schemaStore = {
+							enable = false,
+							url = "",
+						},
+						schemas = require("schemastore").yaml.schemas(),
+					},
+				},
 			})
 		end,
 		keys = function()

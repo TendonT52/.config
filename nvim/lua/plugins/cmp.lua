@@ -14,6 +14,7 @@ return {
 			completion = {
 				completeopt = "menu,menuone,preview",
 			},
+			preselect = cmp.PreselectMode.None,
 
 			mapping = cmp.mapping.preset.insert({
 				["<C-u>"] = cmp.mapping.scroll_docs(-4),
@@ -41,6 +42,13 @@ return {
 					cmp.config.compare.recently_used,
 					cmp.config.compare.kind,
 				},
+			},
+		})
+
+		cmp.setup.cmdline("/", {
+			mapping = cmp.mapping.preset.cmdline(),
+			sources = {
+				{ name = "buffer" },
 			},
 		})
 	end,

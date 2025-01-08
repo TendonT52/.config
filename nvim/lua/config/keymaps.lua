@@ -32,3 +32,6 @@ vim.keymap.set("i", "<C-h>", "<C-\\><C-N><C-w>h", { desc = "Move to left pane" }
 vim.keymap.set("i", "<C-j>", "<C-\\><C-N><C-w>j", { desc = "Move to pane below" })
 vim.keymap.set("i", "<C-k>", "<C-\\><C-N><C-w>k", { desc = "Move to pane above" })
 vim.keymap.set("i", "<C-l>", "<C-\\><C-N><C-w>l", { desc = "Move to right pane" })
+
+-- Open diagnostics in float
+vim.keymap.set('n', 'gl', vim.diagnostic.open_float, { desc = 'Open diagnostics float' })

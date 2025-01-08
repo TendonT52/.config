@@ -4,7 +4,6 @@ return {
 	config = function()
 		local lualine = require("lualine")
 		local lazy_status = require("lazy.status") -- to configure lazy pending updates count
-		local noice = require("noice")
 
 		local lint_progress = function()
 			local linters = require("lint").get_running()
